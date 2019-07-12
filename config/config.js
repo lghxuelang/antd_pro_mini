@@ -89,9 +89,23 @@ export default {
       routes: [
         {
           path: '/',
-          name: 'welcome',
-          icon: 'smile',
-          component: './Welcome',
+          name: '用户管理',
+          icon: 'user',
+          // component: './Welcome',
+          routes: [
+            {
+              path: '/userlist',
+              name: '用户列表',
+              icon: 'smile',
+              component: '../components/User/userlist',
+            },
+            {
+              path: '/userinfo',
+              name: '用户详情',
+              icon: 'book',
+              component: '../components/User/userinfo',
+            },
+          ],
         },
         {
           component: './404',
