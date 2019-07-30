@@ -1,25 +1,25 @@
-import { DefaultFooter, getMenuData, getPageTitle } from '@ant-design/pro-layout';
-import DocumentTitle from 'react-document-title';
-import Link from 'umi/link';
-import React from 'react';
-import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
-import SelectLang from '@/components/SelectLang';
-import logo from '../assets/logo.svg';
-import styles from './UserLayout.less';
+import { getMenuData, getPageTitle } from "@ant-design/pro-layout";
+import DocumentTitle from "react-document-title";
+import Link from "umi/link";
+import React from "react";
+import { connect } from "dva";
+import { formatMessage } from "umi-plugin-react/locale";
+import SelectLang from "@/components/SelectLang";
+import logo from "../assets/logo.svg";
+import styles from "./UserLayout.less";
 
 const UserLayout = props => {
   const {
     route = {
-      routes: [],
-    },
+      routes: []
+    }
   } = props;
   const { routes = [] } = route;
   const {
     children,
     location = {
-      pathname: '',
-    },
+      pathname: ""
+    }
   } = props;
   const { breadcrumb } = getMenuData(routes);
   return (
@@ -28,7 +28,7 @@ const UserLayout = props => {
         pathname: location.pathname,
         breadcrumb,
         formatMessage,
-        ...props,
+        ...props
       })}
     >
       <div className={styles.container}>
@@ -40,14 +40,16 @@ const UserLayout = props => {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Ant Design</span>
+                <span className={styles.title}>MINI</span>
               </Link>
             </div>
-            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+            <div className={styles.desc}>
+              
+            </div>
           </div>
           {children}
         </div>
-        <DefaultFooter />
+        {/* <DefaultFooter /> */}
       </div>
     </DocumentTitle>
   );

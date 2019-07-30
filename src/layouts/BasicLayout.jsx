@@ -3,49 +3,30 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
-import ProLayout from '@ant-design/pro-layout';
-import React, { useEffect } from 'react';
-import Link from 'umi/link';
-import { connect } from 'dva';
-import { formatMessage } from 'umi-plugin-react/locale';
-import Authorized from '@/utils/Authorized';
-import RightContent from '@/components/GlobalHeader/RightContent';
-import { isAntDesignPro } from '@/utils/utils';
-import logo from '../assets/logo.svg';
+import ProLayout from "@ant-design/pro-layout";
+import React, { useEffect } from "react";
+import Link from "umi/link";
+import { connect } from "dva";
+import { formatMessage } from "umi-plugin-react/locale";
+import Authorized from "@/utils/Authorized";
+import RightContent from "@/components/GlobalHeader/RightContent";
+import { isAntDesignPro } from "@/utils/utils";
+import logo from "../assets/logo.svg";
 
 /**
  * use Authorized check all menu item
  */
 const menuDataRender = menuList =>
   menuList.map(item => {
-    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
+    const localItem = {
+      ...item,
+      children: item.children ? menuDataRender(item.children) : []
+    };
     return Authorized.check(item.authority, localItem, null);
   });
 
 const footerRender = (_, defaultDom) => {
-  if (!isAntDesignPro()) {
-    return defaultDom;
-  }
-
-  return (
-    <>
-      {defaultDom}
-      <div
-        style={{
-          padding: '0px 24px 24px',
-          textAlign: 'center',
-        }}
-      >
-        <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">
-          <img
-            src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg"
-            width="82px"
-            alt="netlify logo"
-          />
-        </a>
-      </div>
-    </>
-  );
+  return null;
 };
 
 const BasicLayout = props => {
@@ -57,10 +38,10 @@ const BasicLayout = props => {
   useEffect(() => {
     if (dispatch) {
       dispatch({
-        type: 'user/fetchCurrent',
+        type: "user/fetchCurrent"
       });
       dispatch({
-        type: 'settings/getSetting',
+        type: "settings/getSetting"
       });
     }
   }, []);
@@ -71,8 +52,8 @@ const BasicLayout = props => {
   const handleMenuCollapse = payload =>
     dispatch &&
     dispatch({
-      type: 'global/changeLayoutCollapsed',
-      payload,
+      type: "global/changeLayoutCollapsed",
+      payload
     });
 
   return (
@@ -88,18 +69,18 @@ const BasicLayout = props => {
       }}
       breadcrumbRender={(routers = []) => [
         {
-          path: '/',
+          path: "/",
           breadcrumbName: formatMessage({
-            id: 'menu.home',
-            defaultMessage: 'Home',
-          }),
+            id: "menu.home",
+            defaultMessage: "Home"
+          })
         },
-        ...routers,
+        ...routers
       ]}
       itemRender={(route, params, routes, paths) => {
         const first = routes.indexOf(route) === 0;
         return first ? (
-          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+          <Link to={paths.join("/")}>{route.breadcrumbName}</Link>
         ) : (
           <span>{route.breadcrumbName}</span>
         );
@@ -118,5 +99,5 @@ const BasicLayout = props => {
 
 export default connect(({ global, settings }) => ({
   collapsed: global.collapsed,
-  settings,
+  settings
 }))(BasicLayout);
